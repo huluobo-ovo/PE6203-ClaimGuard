@@ -1,0 +1,141 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "merchant",
+    "date",
+    "amount",
+    "tax_amount",
+    "currency",
+    "receipt_id",
+    "payment_method",
+    "category",
+    "field_confidence",
+    "warnings",
+    "attack_detected"
+  ],
+  "properties": {
+    "merchant": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "amount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "tax_amount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$"
+    },
+    "receipt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payment_method": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "category": {
+      "enum": [
+        "meal",
+        "transport",
+        "hotel",
+        "airfare",
+        "other",
+        "unclear"
+      ]
+    },
+    "field_confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "merchant",
+        "date",
+        "amount",
+        "tax_amount",
+        "currency",
+        "receipt_id",
+        "payment_method",
+        "category"
+      ],
+      "properties": {
+        "merchant": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "date": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "tax_amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "currency": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "receipt_id": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "payment_method": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "category": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attack_detected": {
+      "type": "boolean"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "policy_ids",
+    "rationale",
+    "missing_evidence",
+    "uncertainty",
+    "next_action"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "likely_eligible",
+        "likely_ineligible",
+        "needs_human_review"
+      ]
+    },
+    "policy_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_action": {
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

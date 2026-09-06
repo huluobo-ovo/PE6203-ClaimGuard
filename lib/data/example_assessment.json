@@ -1,0 +1,15 @@
+{
+  "status": "needs_human_review",
+  "policy_ids": [
+    "HOTEL-001",
+    "HOTEL-003"
+  ],
+  "rationale": "The SGD 280 one-night claim exceeds the SGD 250 nightly cap. Finance must review any over-limit exception.",
+  "missing_evidence": [
+    "Prior approval record if one exists; otherwise a Finance exception review"
+  ],
+  "uncertainty": [
+    "No prior approval was obtained; an exception has not been verified."
+  ],
+  "next_action": "Attach any existing approval record and submit to Finance for exception review."
+}

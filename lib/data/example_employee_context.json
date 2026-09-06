@@ -1,0 +1,30 @@
+{
+  "expense_category": "hotel",
+  "business_purpose": "Client meeting",
+  "expense_date": "2026-08-20",
+  "submitted_date": "2026-08-25",
+  "claimed_amount": 280,
+  "claimed_currency": "SGD",
+  "preapproval_status": "not_obtained",
+  "evidence_refs": [
+    "demo:receipt-H-0020",
+    "demo:manager-approval-01",
+    "demo:history-clear-01"
+  ],
+  "itemized_receipt": true,
+  "duplicate_check": "clear",
+  "manager_approval": "documented",
+  "attendee_count": null,
+  "client_meal": null,
+  "attendee_details_present": null,
+  "contains_alcohol": null,
+  "transport_mode": null,
+  "night_travel": null,
+  "route_evidence_present": null,
+  "hotel_nights": 1,
+  "personal_items_present": false,
+  "flight_class": null,
+  "fx_rate_to_sgd": null,
+  "fx_evidence_present": null,
+  "receipt_lost": false
+}

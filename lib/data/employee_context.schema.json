@@ -1,0 +1,197 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "expense_category",
+    "business_purpose",
+    "expense_date",
+    "submitted_date",
+    "claimed_amount",
+    "claimed_currency",
+    "preapproval_status",
+    "evidence_refs",
+    "itemized_receipt",
+    "duplicate_check",
+    "manager_approval",
+    "attendee_count",
+    "client_meal",
+    "attendee_details_present",
+    "contains_alcohol",
+    "transport_mode",
+    "night_travel",
+    "route_evidence_present",
+    "hotel_nights",
+    "personal_items_present",
+    "flight_class",
+    "fx_rate_to_sgd",
+    "fx_evidence_present",
+    "receipt_lost"
+  ],
+  "properties": {
+    "expense_category": {
+      "enum": [
+        "meal",
+        "transport",
+        "hotel",
+        "airfare",
+        "other",
+        "unclear"
+      ]
+    },
+    "business_purpose": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expense_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "submitted_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "claimed_amount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "claimed_currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$"
+    },
+    "preapproval_status": {
+      "enum": [
+        "documented",
+        "not_obtained",
+        "unknown"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "itemized_receipt": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "duplicate_check": {
+      "enum": [
+        "clear",
+        "duplicate",
+        "unknown"
+      ]
+    },
+    "manager_approval": {
+      "enum": [
+        "documented",
+        "not_obtained",
+        "unknown"
+      ]
+    },
+    "attendee_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "client_meal": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "attendee_details_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "contains_alcohol": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "transport_mode": {
+      "enum": [
+        "public",
+        "taxi",
+        "ride_hail",
+        "other",
+        null
+      ]
+    },
+    "night_travel": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "route_evidence_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "hotel_nights": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "personal_items_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "flight_class": {
+      "enum": [
+        "economy",
+        "premium_economy",
+        "business",
+        "first",
+        null
+      ]
+    },
+    "fx_rate_to_sgd": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0
+    },
+    "fx_evidence_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "receipt_lost": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
