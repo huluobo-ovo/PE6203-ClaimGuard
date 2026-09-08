@@ -1,4 +1,9 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pe6203.example/claimguard/assessment.schema.json",
+  "title": "ASSESSMENT",
+  "description": "The single JSON object Prompt B returns. A pre-screening result only: nothing in this object represents an approved payment, and Finance makes the final decision.",
+  "$comment": "Member 5 must validate every Prompt B response against this schema BEFORE showing it. A response that fails validation is not an error to display -- it is routed to needs_human_review, because an unparseable pre-screen is an unverified one. Two checks are enforced here that a plain type check would miss: policy_ids may only contain well-formed IDs (the model must not invent a citation such as ADMIN-999), and a likely_eligible result may not carry outstanding missing evidence.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -11,6 +16,7 @@
   ],
   "properties": {
     "status": {
+      "description": "likely_eligible = every applicable requirement is supported and no unresolved risk remains; still awaiting Finance. likely_ineligible = the evidence establishes a prohibited or over-limit claim with nothing outstanding. needs_human_review = anything missing, uncertain, conflicting, attacked, or sent to a human by a policy card itself. When a violation is established AND an unresolved risk exists, needs_human_review wins.",
       "enum": [
         "likely_eligible",
         "likely_ineligible",
@@ -18,29 +24,60 @@
       ]
     },
     "policy_ids": {
+      "description": "The policy cards actually relied on, which must all appear in the retrieved evidence for this claim. May be empty ONLY when the claim failed input validation rather than a policy rule; in that case the rationale must identify it as a system or input limitation, not a company rule. The caller re-checks each ID against the retrieval result -- the pattern here catches a fabricated citation, not an irrelevant one.",
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^(DOC|GEN|MEAL|TRANSPORT|HOTEL|AIR|FX|LOST)-[0-9]{3}$"
       }
     },
     "rationale": {
-      "type": "string"
+      "description": "Why this status follows from the cited policies. States the confirmed violation even when the status is needs_human_review.",
+      "type": "string",
+      "minLength": 1
     },
     "missing_evidence": {
+      "description": "Specific documents or facts the employee must supply. Concrete items only ('itemized hotel invoice separating room charges'), never a restatement of the status.",
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1
       }
     },
     "uncertainty": {
+      "description": "Unresolved risks and unknowns that the evidence does not settle: unknown flags, unverified approvals, conflicting policy versions, detected injection attempts.",
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1
       }
     },
     "next_action": {
-      "type": "string"
+      "description": "One concrete step for the employee or for Finance. Must never state that payment is approved.",
+      "type": "string",
+      "minLength": 1
     }
   },
-  "$schema": "https://json-schema.org/draft/2020-12/schema"
+  "allOf": [
+    {
+      "$comment": "A claim cannot be pre-screened as eligible while evidence is still outstanding -- that combination contradicts the definition of likely_eligible in Prompt B and is the most common malformed output from a weaker model.",
+      "if": {
+        "properties": {
+          "status": {
+            "const": "likely_eligible"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "missing_evidence": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
 }
