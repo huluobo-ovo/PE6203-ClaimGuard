@@ -56,47 +56,5 @@
       "type": "string",
       "minLength": 1
     }
-  },
-  "allOf": [
-    {
-      "$comment": "A claim cannot pass while evidence is still outstanding.",
-      "if": {
-        "properties": {
-          "status": {
-            "const": "passed"
-          }
-        },
-        "required": [
-          "status"
-        ]
-      },
-      "then": {
-        "properties": {
-          "missing_evidence": {
-            "maxItems": 0
-          }
-        }
-      }
-    },
-    {
-      "$comment": "A rejection must name the rule it rests on. Without a citation it is an opinion.",
-      "if": {
-        "properties": {
-          "status": {
-            "const": "not_passed"
-          }
-        },
-        "required": [
-          "status"
-        ]
-      },
-      "then": {
-        "properties": {
-          "policy_ids": {
-            "minItems": 1
-          }
-        }
-      }
-    }
-  ]
+  }
 }

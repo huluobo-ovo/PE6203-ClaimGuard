@@ -6,6 +6,7 @@ import { PROMPT_A,PROMPT_B,PROMPT_C } from '@/lib/prompts';
 import { detectMime,schemaErrors,retrieve,validation,human,validateCitations,guidanceFallback } from '@/lib/engine';
 
 const json=(v:unknown,status=200)=>Response.json(v,{status,headers:{'Cache-Control':'no-store'}});
+const validAssessmentRules=(output:any)=>output?.status==='passed'?Array.isArray(output.missing_evidence)&&output.missing_evidence.length===0:output?.status==='not_passed'?Array.isArray(output.policy_ids)&&output.policy_ids.length>0:false;
 
 export async function POST(req:Request){
  try{
@@ -49,7 +50,7 @@ export async function POST(req:Request){
    if(!response.ok){const providerError=await response.text();return json({error:`OpenRouter returned ${response.status}: ${providerError.slice(0,300)}`,provider_status:response.status,traces},502)}
    const payload:any=await response.json();const raw=payload.choices?.[0]?.message?.content||'';
    const trace={module:b.action,attempt:attempt+1,model_id:'openai/gpt-4o-mini',model_version:payload.model||'openai/gpt-4o-mini',parameters:{temperature:0,max_tokens:8192},timestamp:new Date().toISOString(),latency_ms:Date.now()-started,usage:payload.usage||null,raw_output:raw,prompt_version:'1.0',policy_version:'1.0'};traces.push(trace);
-   try{const output=JSON.parse(raw);if(schemaErrors(output,schema).length)continue;if(b.action==='assess'&&!validateCitations(output,input.RETRIEVAL_RESULT.policy_ids))continue;if(b.action==='guidance'&&(output.guidance.trim().split(/\s+/).length>100||!/Pre-screening result:/i.test(output.guidance)||/payment approved|officially approved/i.test(output.guidance)||!output.guidance.includes(b.assessment.status)))continue;return json({output,traces,model_used:true});}catch{/* one bounded retry */}
+   try{const output=JSON.parse(raw);if(schemaErrors(output,schema).length)continue;if(b.action==='assess'&&(!validAssessmentRules(output)||!validateCitations(output,input.RETRIEVAL_RESULT.policy_ids)))continue;if(b.action==='guidance'&&(output.guidance.trim().split(/\s+/).length>100||!/Pre-screening result:/i.test(output.guidance)||/payment approved|officially approved/i.test(output.guidance)||!output.guidance.includes(b.assessment.status)))continue;return json({output,traces,model_used:true});}catch{/* one bounded retry */}
   }
   if(b.action==='guidance')return json({output:{guidance:guidanceFallback(b.assessment)},traces,fallback:true,model_used:true});
   return json({error:'The response did not pass format or evidence checks. Send this case for human review.',traces,output:human(['Output did not pass validation'])},422);
