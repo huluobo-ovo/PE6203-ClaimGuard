@@ -11,3 +11,5 @@
 .file-input-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;clip-path:inset(50%)}.file-picker{border:1px solid #146952;background:#fff;color:#146952;border-radius:7px;padding:7px 14px;font-size:13px;font-weight:700}.file-picker:hover{background:#eaf5f0}.file-picker-status{font-size:12px;color:var(--muted-foreground)}
 
 .inline-request-error{margin:14px 0 0;text-align:left}
+
+.steps .step button{border:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;padding:0;cursor:pointer}.steps .step.locked button{cursor:not-allowed}.steps .step.locked{opacity:.52}
