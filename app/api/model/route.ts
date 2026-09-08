@@ -15,9 +15,9 @@ export async function POST(req:Request){
   const bodyText=await req.text();
   if(bodyText.length>15_000_000)return json({error:'The request is too large.'},413);
   const b=JSON.parse(bodyText);
-  const key=req.headers.get('x-session-openai-key')||'';
-  if(!key.trim())return json({error:'Enter your OpenAI API key in Model settings before using Live mode.'},401);
-  if(b.model!=='gpt-4o-mini')return json({error:'This site is configured for gpt-4o-mini.'},400);
+  const key=req.headers.get('x-session-openrouter-key')||'';
+  if(!key.trim())return json({error:'Enter your OpenRouter API key in Model settings before using Live mode.'},401);
+  if(b.model!=='openai/gpt-4o-mini')return json({error:'This site is configured for openai/gpt-4o-mini.'},400);
   if(!['extract','assess','guidance','baselineA','baselineB'].includes(b.action))return json({error:'Invalid action.'},400);
 
   const traces:any[]=[];let schema:any,instruction='',input:any={},file:any=null;
@@ -44,10 +44,10 @@ export async function POST(req:Request){
 
   for(let attempt=0;attempt<2;attempt++){
    const started=Date.now();const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),60000);
-   let response:Response;try{response=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',signal:controller.signal,headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},body:JSON.stringify({model:'gpt-4o-mini',temperature:0,max_tokens:8192,response_format:{type:'json_schema',json_schema:{name:'claimguard_response',strict:true,schema}},messages:[{role:'system',content:instruction+'\nReturn only JSON that matches the supplied schema.'},{role:'user',content:[{type:'text',text:JSON.stringify(input)},...(file?[file]:[])]}]})})}finally{clearTimeout(timer)}
-   if(!response.ok)return json({error:`OpenAI returned ${response.status}. Check your API key, billing, and project permissions.`,provider_status:response.status,traces},502);
+   let response:Response;try{response=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',signal:controller.signal,headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`,'HTTP-Referer':'https://pe6203-a-06.yangruijia216.chatgpt.site','X-OpenRouter-Title':'ClaimGuard'},body:JSON.stringify({model:'openai/gpt-4o-mini',temperature:0,max_tokens:8192,response_format:{type:'json_schema',json_schema:{name:'claimguard_response',strict:true,schema}},messages:[{role:'system',content:instruction+'\nReturn only JSON that matches the supplied schema.'},{role:'user',content:[{type:'text',text:JSON.stringify(input)},...(file?[file]:[])]}]})})}finally{clearTimeout(timer)}
+   if(!response.ok)return json({error:`OpenRouter returned ${response.status}. Check your API key, credits, and model access.`,provider_status:response.status,traces},502);
    const payload:any=await response.json();const raw=payload.choices?.[0]?.message?.content||'';
-   const trace={module:b.action,attempt:attempt+1,model_id:'gpt-4o-mini',model_version:payload.model||'gpt-4o-mini',parameters:{temperature:0,max_tokens:8192},timestamp:new Date().toISOString(),latency_ms:Date.now()-started,usage:payload.usage||null,raw_output:raw,prompt_version:'1.0',policy_version:'1.0'};traces.push(trace);
+   const trace={module:b.action,attempt:attempt+1,model_id:'openai/gpt-4o-mini',model_version:payload.model||'openai/gpt-4o-mini',parameters:{temperature:0,max_tokens:8192},timestamp:new Date().toISOString(),latency_ms:Date.now()-started,usage:payload.usage||null,raw_output:raw,prompt_version:'1.0',policy_version:'1.0'};traces.push(trace);
    try{const output=JSON.parse(raw);if(schemaErrors(output,schema).length)continue;if(b.action==='assess'&&!validateCitations(output,input.RETRIEVAL_RESULT.policy_ids))continue;if(b.action==='guidance'&&(output.guidance.trim().split(/\s+/).length>100||!/Pre-screening result:/i.test(output.guidance)||/payment approved|officially approved/i.test(output.guidance)||!output.guidance.includes(b.assessment.status)))continue;return json({output,traces,model_used:true});}catch{/* one bounded retry */}
   }
   if(b.action==='guidance')return json({output:{guidance:guidanceFallback(b.assessment)},traces,fallback:true,model_used:true});
