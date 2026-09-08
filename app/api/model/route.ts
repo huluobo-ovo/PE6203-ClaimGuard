@@ -15,8 +15,8 @@ export async function POST(req:Request){
   const bodyText=await req.text();
   if(bodyText.length>15_000_000)return json({error:'The request is too large.'},413);
   const b=JSON.parse(bodyText);
-  const key=req.headers.get('x-session-openrouter-key')||'';
-  if(!key.trim())return json({error:'Enter your OpenRouter API key in Model settings before using Live mode.'},401);
+  const key=process.env.OPENROUTER_API_KEY||req.headers.get('x-session-openrouter-key')||'';
+  if(!key.trim())return json({error:'The site administrator has not configured the OpenRouter API key yet.'},503);
   if(b.model!=='openai/gpt-4o-mini')return json({error:'This site is configured for openai/gpt-4o-mini.'},400);
   if(!['extract','assess','guidance','baselineA','baselineB'].includes(b.action))return json({error:'Invalid action.'},400);
 
