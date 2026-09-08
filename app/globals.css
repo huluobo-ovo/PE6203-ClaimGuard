@@ -12,4 +12,4 @@
 
 .inline-request-error{margin:14px 0 0;text-align:left}
 
-.steps .step button{border:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;padding:0;cursor:pointer}.steps .step.locked button{cursor:not-allowed}.steps .step.locked{opacity:.52}
+.steps .step{display:inline-flex;align-items:center;gap:12px;white-space:nowrap}.steps .step button{border:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;padding:0;cursor:pointer;white-space:nowrap}.steps .step.locked button{cursor:not-allowed}.steps .step.locked{opacity:.52}
