@@ -28,7 +28,7 @@ const versionInfo={A:{name:'最简模型',detail:'原始票据＋极简指令',s
 export default function Home(){
  const [lang,setLang]=useState<'en'|'zh'>('en');
  const [activeStep,setActiveStep]=useState(0);
- const [tab,setTab]=useState('claim'),[variant,setVariant]=useState<'A'|'B'|'C'>('C'),[mode,setMode]=useState<'demo'|'live'>('demo');
+ const [tab,setTab]=useState('claim'),[variant,setVariant]=useState<'A'|'B'|'C'>('C'),[mode,setMode]=useState<'demo'|'live'>('live');
  const [settings,setSettings]=useState(false),[key,setKey]=useState(''),[model,setModel]=useState('gpt-4o-mini');
  const [file,setFile]=useState<ReceiptFile|null>(null),[sample,setSample]=useState<Data|null>(null),[ctx,setCtx]=useState<Data>(blankContext),[claim,setClaim]=useState<Data|null>(null),[original,setOriginal]=useState<Data|null>(null),[originalContext,setOriginalContext]=useState<Data|null>(null);
  const [risk,setRisk]=useState<string[]>([]),[result,setResult]=useState<Assessment|null>(null),[retrieved,setRetrieved]=useState<ReturnType<typeof retrieve>|null>(null),[guidance,setGuidance]=useState(''),[logs,setLogs]=useState<Data[]>([]),[traces,setTraces]=useState<Data[]>([]);
