@@ -3,8 +3,8 @@ import {retrieve,validation,demoAssess,moneyEqual,exceeds,schemaErrors,detectMim
 const read=p=>JSON.parse(fs.readFileSync(new URL('../lib/data/'+p,import.meta.url),'utf8'));
 const cards=read('policy_cards.json'),cases=read('retrieval_cases.json'),c=read('example_extraction.json'),x=read('example_employee_context.json');
 for(const r of cases){test(r.case_id+' matches member4 policy IDs/flags',()=>{const a=retrieve(r.claim,r.context,cards);assert.deepEqual(a.policy_ids,r.expected_policy_ids);assert.deepEqual(a.flags,r.expected_flags)});test(r.case_id+' demonstration pre-screen expected state',()=>{const flags=validation(r.claim,r.context);const a=flags.length?'needs_human_review':demoAssess(r.claim,r.context,retrieve(r.claim,r.context,cards)).status;assert.equal(a,r.expected_assessment_status)})}
-test('280 versus 300 blocks',()=>assert(validation(c,{...x,claimed_amount:300}).some(s=>s.includes('金额'))));
-test('corrected extraction preserves original low confidence',()=>{const orig=structuredClone(c);orig.date=null;orig.field_confidence.date=0;assert(validation(c,x,orig).some(s=>s.includes('置信度')))});
+test('280 versus 300 blocks',()=>assert(validation(c,{...x,claimed_amount:300}).some(s=>s.includes('Claimed amount'))));
+test('corrected extraction preserves original low confidence',()=>{const orig=structuredClone(c);orig.date=null;orig.field_confidence.date=0;assert(validation(c,x,orig).some(s=>s.includes('confidence')))});
 test('0.1+0.2 is not silently accepted as exact 0.3',()=>assert.equal(moneyEqual(.1+.2,.3),false));
 test('equal amounts normalize decimal representation',()=>assert(moneyEqual(280,280.00)));
 test('per-night cap exact and foreign converted',()=>{assert.equal(exceeds(500,1,250,2),false);assert.equal(exceeds(220,1.3,250,1),true)});
