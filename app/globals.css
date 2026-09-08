@@ -13,3 +13,4 @@
 .inline-request-error{margin:14px 0 0;text-align:left}
 
 .steps .step{display:inline-flex;align-items:center;gap:12px;white-space:nowrap}.steps .step button{border:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;padding:0;cursor:pointer;white-space:nowrap}.steps .step.locked button{cursor:not-allowed}.steps .step.locked{opacity:.52}
+.required-mark{display:inline-block;margin-left:4px;color:#b13333;font-weight:800;cursor:help}.field-error{display:block;margin-top:5px;color:#b13333;font-size:12px;font-weight:600;line-height:1.4}
