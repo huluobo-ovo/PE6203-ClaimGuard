@@ -18,5 +18,6 @@ test('unknown evidence cannot become eligible',()=>{const d={...x,claimed_amount
 test('alcohol violation is ineligible with complete evidence',()=>{const r=cases[0];const ctx={...r.context,contains_alcohol:true};assert.equal(demoAssess(r.claim,ctx,retrieve(r.claim,ctx,cards)).status,'likely_ineligible')});
 test('unknown meal boolean is human',()=>{const r=cases[0];const ctx={...r.context,contains_alcohol:null};assert.equal(demoAssess(r.claim,ctx,retrieve(r.claim,ctx,cards)).status,'needs_human_review')});
 test('fake citation is rejected',()=>assert.equal(validateCitations({policy_ids:['ADMIN-999']},cards.map(p=>p.policy_id)),false));
+test('duplicate citations are rejected',()=>assert.equal(validateCitations({policy_ids:['DOC-001','DOC-001']},cards.map(p=>p.policy_id)),false));
 test('JSON extra field and invalid date rejected',()=>{const errors=schemaErrors({...c,date:'2026-02-30',extra:1},read('extraction.schema.json'));assert(errors.length>=2)});
 test('file signatures checked independent of extension',()=>{assert.equal(detectMime(new TextEncoder().encode('hello world')),null);assert.equal(detectMime(new TextEncoder().encode('%PDF-1.7 content')),'application/pdf')});
