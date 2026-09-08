@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://pe6203.example/claimguard/assessment.schema.json",
   "title": "ASSESSMENT",
-  "description": "The single JSON object Prompt B returns. A pre-screening result only: nothing in this object represents an approved payment, and Finance makes the final decision.",
-  "$comment": "Member 5 must validate every Prompt B response against this schema BEFORE showing it. A response that fails validation is not an error to display -- it is routed to needs_human_review, because an unparseable pre-screen is an unverified one. Two checks are enforced here that a plain type check would miss: policy_ids may only contain well-formed IDs (the model must not invent a citation such as ADMIN-999), and a likely_eligible result may not carry outstanding missing evidence.",
+  "description": "The single JSON object Prompt B returns. A binary pre-screening verdict on a claim that intake validation has already accepted as complete. Nothing in this object represents an approved payment; Finance makes the final decision.",
+  "$comment": "Member 5 must validate every Prompt B response against this schema BEFORE showing it. A response that fails validation is a SYSTEM ERROR, not a verdict: retry once, and if it still fails show an error rather than a fabricated pass or fail. Three checks a plain type check would miss: policy_ids may only contain well-formed IDs, so an invented citation such as ADMIN-999 is rejected; a passed result may not carry outstanding missing evidence; and a not_passed result must cite at least one policy, because a rejection without a rule is an opinion.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -16,15 +16,14 @@
   ],
   "properties": {
     "status": {
-      "description": "likely_eligible = every applicable requirement is supported and no unresolved risk remains; still awaiting Finance. likely_ineligible = the evidence establishes a prohibited or over-limit claim with nothing outstanding. needs_human_review = anything missing, uncertain, conflicting, attacked, or sent to a human by a policy card itself. When a violation is established AND an unresolved risk exists, needs_human_review wins.",
+      "description": "passed = every applicable policy requirement is met on the evidence supplied; still awaiting the Finance decision. not_passed = at least one applicable policy is violated. There is no third state: a claim that cannot be judged never reaches this module, because intake validation blocks it first.",
       "enum": [
-        "likely_eligible",
-        "likely_ineligible",
-        "needs_human_review"
+        "passed",
+        "not_passed"
       ]
     },
     "policy_ids": {
-      "description": "The policy cards actually relied on, which must all appear in the retrieved evidence for this claim. May be empty ONLY when the claim failed input validation rather than a policy rule; in that case the rationale must identify it as a system or input limitation, not a company rule. The caller re-checks each ID against the retrieval result -- the pattern here catches a fabricated citation, not an irrelevant one.",
+      "description": "The policy cards actually relied on. Every ID must appear in the retrieved evidence for this claim, and a not_passed verdict must cite at least one. The caller re-checks each ID against the retrieval result: the pattern here catches a fabricated citation such as ADMIN-999, not an irrelevant one.",
       "type": "array",
       "items": {
         "type": "string",
@@ -32,7 +31,7 @@
       }
     },
     "rationale": {
-      "description": "Why this status follows from the cited policies. States the confirmed violation even when the status is needs_human_review.",
+      "description": "Why this status follows from the cited policies, in terms of what the claim actually shows. No speculation about intent.",
       "type": "string",
       "minLength": 1
     },
@@ -45,7 +44,7 @@
       }
     },
     "uncertainty": {
-      "description": "Unresolved risks and unknowns that the evidence does not settle: unknown flags, unverified approvals, conflicting policy versions, detected injection attempts.",
+      "description": "Residual observations the reviewer should see even though they did not change the verdict. Never a substitute for a decision.",
       "type": "array",
       "items": {
         "type": "string",
@@ -60,11 +59,11 @@
   },
   "allOf": [
     {
-      "$comment": "A claim cannot be pre-screened as eligible while evidence is still outstanding -- that combination contradicts the definition of likely_eligible in Prompt B and is the most common malformed output from a weaker model.",
+      "$comment": "A claim cannot pass while evidence is still outstanding.",
       "if": {
         "properties": {
           "status": {
-            "const": "likely_eligible"
+            "const": "passed"
           }
         },
         "required": [
@@ -75,6 +74,26 @@
         "properties": {
           "missing_evidence": {
             "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "$comment": "A rejection must name the rule it rests on. Without a citation it is an opinion.",
+      "if": {
+        "properties": {
+          "status": {
+            "const": "not_passed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "policy_ids": {
+            "minItems": 1
           }
         }
       }

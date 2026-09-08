@@ -4,7 +4,7 @@
     "title": "Receipt evidence",
     "status": "CURRENT",
     "category": "general",
-    "rule": "Each claim needs a readable itemized receipt identifying merchant, date, total and currency. Missing required evidence requires human review; a missing receipt number alone is not disqualifying.",
+    "rule": "Each claim must include a readable itemized receipt identifying merchant, date, total and currency. A claim without an itemized receipt does not pass. A missing receipt number alone is not disqualifying.",
     "exceptions": "None",
     "tags": [
       "receipt",
@@ -17,17 +17,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §DOC-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §DOC-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Receipt evidence. Each claim needs a readable itemized receipt identifying merchant, date, total and currency. Missing required evidence requires human review; a missing receipt number alone is not disqualifying. Exceptions: None"
+    "text": "Receipt evidence. Each claim must include a readable itemized receipt identifying merchant, date, total and currency. A claim without an itemized receipt does not pass. A missing receipt number alone is not disqualifying. Exceptions: None"
   },
   {
     "policy_id": "GEN-002",
     "title": "Submission deadline",
     "status": "CURRENT",
     "category": "general",
-    "rule": "Submit within 30 calendar days after the receipt date, inclusive. Later submissions are likely ineligible when dates are established. A submission before the expense date or an unknown date requires human review.",
+    "rule": "A claim must be submitted within 30 calendar days after the receipt date, inclusive. A claim submitted after that window does not pass. A claim submitted before the expense date does not pass.",
     "exceptions": "None",
     "tags": [
       "deadline",
@@ -40,17 +40,17 @@
     "limit_unit": "days",
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §GEN-002",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §GEN-002",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Submission deadline. Submit within 30 calendar days after the receipt date, inclusive. Later submissions are likely ineligible when dates are established. A submission before the expense date or an unknown date requires human review. Exceptions: None"
+    "text": "Submission deadline. A claim must be submitted within 30 calendar days after the receipt date, inclusive. A claim submitted after that window does not pass. A claim submitted before the expense date does not pass. Exceptions: None"
   },
   {
     "policy_id": "GEN-003",
     "title": "Duplicate claims",
     "status": "CURRENT",
     "category": "general",
-    "rule": "A confirmed duplicate claim is likely ineligible. A clear historical duplicate check is required before likely eligible; an unknown check requires human review. Receipt ID alone does not prove duplication.",
+    "rule": "A claim that a historical duplicate check identifies as already reimbursed does not pass. A receipt ID alone does not establish duplication.",
     "exceptions": "None",
     "tags": [
       "duplicate",
@@ -61,17 +61,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §GEN-003",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §GEN-003",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Duplicate claims. A confirmed duplicate claim is likely ineligible. A clear historical duplicate check is required before likely eligible; an unknown check requires human review. Receipt ID alone does not prove duplication. Exceptions: None"
+    "text": "Duplicate claims. A claim that a historical duplicate check identifies as already reimbursed does not pass. A receipt ID alone does not establish duplication. Exceptions: None"
   },
   {
     "policy_id": "GEN-004",
     "title": "Business purpose and approval",
     "status": "CURRENT",
     "category": "general",
-    "rule": "Every claim requires a stated business purpose and documented manager approval before a likely-eligible pre-screen. Missing approval requires human review. All pre-screen results await a final Finance decision; no model can approve payment.",
+    "rule": "Every claim must state a business purpose and carry documented manager approval. A claim missing either does not pass. No pre-screening result is a payment approval; Finance makes the final reimbursement decision.",
     "exceptions": "None",
     "tags": [
       "approval",
@@ -84,17 +84,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §GEN-004",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §GEN-004",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Business purpose and approval. Every claim requires a stated business purpose and documented manager approval before a likely-eligible pre-screen. Missing approval requires human review. All pre-screen results await a final Finance decision; no model can approve payment. Exceptions: None"
+    "text": "Business purpose and approval. Every claim must state a business purpose and carry documented manager approval. A claim missing either does not pass. No pre-screening result is a payment approval; Finance makes the final reimbursement decision. Exceptions: None"
   },
   {
     "policy_id": "MEAL-001",
     "title": "Meal limit",
     "status": "CURRENT",
     "category": "meal",
-    "rule": "Business meals are limited to SGD 50 per attendee per meal, inclusive of taxes and service charges. The supported attendee count must be known. A documented amount above the per-person limit is likely ineligible.",
+    "rule": "Business meals are limited to SGD 50 per attendee per meal, inclusive of taxes and service charges. A claim above the per-attendee limit does not pass.",
     "exceptions": "None",
     "tags": [
       "meal",
@@ -107,17 +107,17 @@
     "limit_unit": "per_attendee_per_meal",
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §MEAL-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §MEAL-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Meal limit. Business meals are limited to SGD 50 per attendee per meal, inclusive of taxes and service charges. The supported attendee count must be known. A documented amount above the per-person limit is likely ineligible. Exceptions: None"
+    "text": "Meal limit. Business meals are limited to SGD 50 per attendee per meal, inclusive of taxes and service charges. A claim above the per-attendee limit does not pass. Exceptions: None"
   },
   {
     "policy_id": "MEAL-002",
     "title": "Alcohol",
     "status": "CURRENT",
     "category": "meal",
-    "rule": "Alcohol is not reimbursable. If alcohol is included in the claimed amount, that submitted claim is likely ineligible. If allocation is unclear, human review is required; a corrected claim excluding alcohol is assessed separately.",
+    "rule": "Alcohol is not reimbursable. A claim whose amount includes alcohol does not pass. A corrected claim that excludes the alcohol portion is assessed separately.",
     "exceptions": "None",
     "tags": [
       "alcohol",
@@ -130,17 +130,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §MEAL-002",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §MEAL-002",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Alcohol. Alcohol is not reimbursable. If alcohol is included in the claimed amount, that submitted claim is likely ineligible. If allocation is unclear, human review is required; a corrected claim excluding alcohol is assessed separately. Exceptions: None"
+    "text": "Alcohol. Alcohol is not reimbursable. A claim whose amount includes alcohol does not pass. A corrected claim that excludes the alcohol portion is assessed separately. Exceptions: None"
   },
   {
     "policy_id": "MEAL-003",
     "title": "Client meals",
     "status": "CURRENT",
     "category": "meal",
-    "rule": "For client meals, attendee names, organizations and business purpose must be documented. Missing details require human review. For non-client meals this card adds no further requirement.",
+    "rule": "A client meal must document attendee names, attendee organizations and the business purpose. A client meal without these details does not pass. For a non-client meal this rule adds no further requirement.",
     "exceptions": "None",
     "tags": [
       "client",
@@ -152,17 +152,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §MEAL-003",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §MEAL-003",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Client meals. For client meals, attendee names, organizations and business purpose must be documented. Missing details require human review. For non-client meals this card adds no further requirement. Exceptions: None"
+    "text": "Client meals. A client meal must document attendee names, attendee organizations and the business purpose. A client meal without these details does not pass. For a non-client meal this rule adds no further requirement. Exceptions: None"
   },
   {
     "policy_id": "TRANSPORT-001",
     "title": "Public transport",
     "status": "CURRENT",
     "category": "transport",
-    "rule": "Actual public-transport business-trip fares are reimbursable when business purpose and route evidence are documented. Personal commuting is not reimbursable.",
+    "rule": "Actual public-transport fares for business travel pass this rule when the business purpose and route evidence are documented. Personal commuting does not pass.",
     "exceptions": "None",
     "tags": [
       "bus",
@@ -176,17 +176,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §TRANSPORT-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §TRANSPORT-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Public transport. Actual public-transport business-trip fares are reimbursable when business purpose and route evidence are documented. Personal commuting is not reimbursable. Exceptions: None"
+    "text": "Public transport. Actual public-transport fares for business travel pass this rule when the business purpose and route evidence are documented. Personal commuting does not pass. Exceptions: None"
   },
   {
     "policy_id": "TRANSPORT-002",
     "title": "Taxi and ride hail",
     "status": "CURRENT",
     "category": "transport",
-    "rule": "Business taxi or ride-hail fares are limited to SGD 80 per trip. Above that limit is likely ineligible except where TRANSPORT-003 applies. Route and business purpose must be supported.",
+    "rule": "Business taxi or ride-hail fares are limited to SGD 80 per trip. A fare above that limit does not pass, except where TRANSPORT-003 applies.",
     "exceptions": "Late-night business trips are governed by TRANSPORT-003.",
     "tags": [
       "taxi",
@@ -200,17 +200,17 @@
     "limit_unit": "per_trip",
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §TRANSPORT-002",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §TRANSPORT-002",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Taxi and ride hail. Business taxi or ride-hail fares are limited to SGD 80 per trip. Above that limit is likely ineligible except where TRANSPORT-003 applies. Route and business purpose must be supported. Exceptions: Late-night business trips are governed by TRANSPORT-003."
+    "text": "Taxi and ride hail. Business taxi or ride-hail fares are limited to SGD 80 per trip. A fare above that limit does not pass, except where TRANSPORT-003 applies. Exceptions: Late-night business trips are governed by TRANSPORT-003."
   },
   {
     "policy_id": "TRANSPORT-003",
     "title": "Late-night travel",
     "status": "CURRENT",
     "category": "transport",
-    "rule": "For documented business travel between 22:00 and 06:00 local time, taxi or ride-hail fares up to SGD 120 per trip may be pre-screened eligible with documented manager approval and route/time evidence. Above SGD 120 is likely ineligible. Unknown time or approval requires human review.",
+    "rule": "For business travel documented between 22:00 and 06:00 local time, taxi or ride-hail fares up to SGD 120 per trip pass this rule when manager approval and route and time evidence are documented. A fare above SGD 120 does not pass.",
     "exceptions": "Replaces the SGD 80 taxi cap only when all night-travel conditions are evidenced.",
     "tags": [
       "night",
@@ -223,17 +223,17 @@
     "limit_unit": "per_trip",
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §TRANSPORT-003",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §TRANSPORT-003",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Late-night travel. For documented business travel between 22:00 and 06:00 local time, taxi or ride-hail fares up to SGD 120 per trip may be pre-screened eligible with documented manager approval and route/time evidence. Above SGD 120 is likely ineligible. Unknown time or approval requires human review. Exceptions: Replaces the SGD 80 taxi cap only when all night-travel conditions are evidenced."
+    "text": "Late-night travel. For business travel documented between 22:00 and 06:00 local time, taxi or ride-hail fares up to SGD 120 per trip pass this rule when manager approval and route and time evidence are documented. A fare above SGD 120 does not pass. Exceptions: Replaces the SGD 80 taxi cap only when all night-travel conditions are evidenced."
   },
   {
     "policy_id": "TRANSPORT-004",
     "title": "Route evidence",
     "status": "CURRENT",
     "category": "transport",
-    "rule": "All transport claims require journey date, origin, destination and business purpose evidence. Unknown transport mode or missing route evidence requires human review.",
+    "rule": "Every transport claim must document the journey date, origin, destination and business purpose. A transport claim without route evidence does not pass.",
     "exceptions": "None",
     "tags": [
       "route",
@@ -246,17 +246,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §TRANSPORT-004",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §TRANSPORT-004",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Route evidence. All transport claims require journey date, origin, destination and business purpose evidence. Unknown transport mode or missing route evidence requires human review. Exceptions: None"
+    "text": "Route evidence. Every transport claim must document the journey date, origin, destination and business purpose. A transport claim without route evidence does not pass. Exceptions: None"
   },
   {
     "policy_id": "HOTEL-001",
     "title": "Hotel limit",
     "status": "CURRENT",
     "category": "hotel",
-    "rule": "Accommodation room charges including taxes are capped at SGD 250 per night. The number of nights and room-charge allocation must be supported. Amount above the cap is assessed under HOTEL-003; an unresolved allocation requires human review.",
+    "rule": "Accommodation room charges including taxes are capped at SGD 250 per night. A claim at or below the cap for the documented number of nights passes this rule. A claim above the cap is assessed under HOTEL-003.",
     "exceptions": "HOTEL-003 governs over-limit cases.",
     "tags": [
       "hotel",
@@ -269,17 +269,17 @@
     "limit_unit": "per_night",
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §HOTEL-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §HOTEL-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Hotel limit. Accommodation room charges including taxes are capped at SGD 250 per night. The number of nights and room-charge allocation must be supported. Amount above the cap is assessed under HOTEL-003; an unresolved allocation requires human review. Exceptions: HOTEL-003 governs over-limit cases."
+    "text": "Hotel limit. Accommodation room charges including taxes are capped at SGD 250 per night. A claim at or below the cap for the documented number of nights passes this rule. A claim above the cap is assessed under HOTEL-003. Exceptions: HOTEL-003 governs over-limit cases."
   },
   {
     "policy_id": "HOTEL-002",
     "title": "Personal hotel items",
     "status": "CURRENT",
     "category": "hotel",
-    "rule": "Personal hotel items such as minibar, spa or leisure charges are excluded. A submitted claim including established personal charges is likely ineligible; an unclear split requires human review.",
+    "rule": "Personal hotel items such as minibar, spa or leisure charges are not reimbursable. A claim whose amount includes personal charges does not pass. A corrected claim covering only the room charge is assessed separately.",
     "exceptions": "None",
     "tags": [
       "minibar",
@@ -292,18 +292,18 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §HOTEL-002",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §HOTEL-002",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Personal hotel items. Personal hotel items such as minibar, spa or leisure charges are excluded. A submitted claim including established personal charges is likely ineligible; an unclear split requires human review. Exceptions: None"
+    "text": "Personal hotel items. Personal hotel items such as minibar, spa or leisure charges are not reimbursable. A claim whose amount includes personal charges does not pass. A corrected claim covering only the room charge is assessed separately. Exceptions: None"
   },
   {
     "policy_id": "HOTEL-003",
     "title": "Over-limit accommodation",
     "status": "CURRENT",
     "category": "hotel",
-    "rule": "Over-limit accommodation always requires Finance human review to verify an exception. Attach prior approval if it exists; if none exists, request a Finance exception review. An employee statement or manager confirmation is not by itself a final approval.",
-    "exceptions": "No automatic eligibility for over-limit stays, even with prior approval.",
+    "rule": "Accommodation above the SGD 250 nightly cap is not reimbursable unless documented prior approval for the higher rate is attached to the claim. With documented prior approval the claim passes this rule; without it the claim does not pass. Convenience alone is not a justification, and an employee statement is not prior approval.",
+    "exceptions": "None",
     "tags": [
       "over limit",
       "exception",
@@ -315,17 +315,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §HOTEL-003",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §HOTEL-003",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Over-limit accommodation. Over-limit accommodation always requires Finance human review to verify an exception. Attach prior approval if it exists; if none exists, request a Finance exception review. An employee statement or manager confirmation is not by itself a final approval. Exceptions: No automatic eligibility for over-limit stays, even with prior approval."
+    "text": "Over-limit accommodation. Accommodation above the SGD 250 nightly cap is not reimbursable unless documented prior approval for the higher rate is attached to the claim. With documented prior approval the claim passes this rule; without it the claim does not pass. Convenience alone is not a justification, and an employee statement is not prior approval. Exceptions: None"
   },
   {
     "policy_id": "AIR-001",
     "title": "Flight class",
     "status": "CURRENT",
     "category": "airfare",
-    "rule": "Business air travel is limited to economy class. A clearly identified higher class is likely ineligible; an unknown class requires human review.",
+    "rule": "Business air travel is limited to economy class. A claim for a higher class does not pass.",
     "exceptions": "None",
     "tags": [
       "flight",
@@ -338,17 +338,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §AIR-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §AIR-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Flight class. Business air travel is limited to economy class. A clearly identified higher class is likely ineligible; an unknown class requires human review. Exceptions: None"
+    "text": "Flight class. Business air travel is limited to economy class. A claim for a higher class does not pass. Exceptions: None"
   },
   {
     "policy_id": "AIR-002",
     "title": "Travel preapproval",
     "status": "CURRENT",
     "category": "airfare",
-    "rule": "Business flight claims require documented approval obtained before travel. Absent or unverified preapproval requires human review.",
+    "rule": "A business flight claim must carry documented approval obtained before travel. A flight claim without documented pre-approval does not pass.",
     "exceptions": "None",
     "tags": [
       "preapproval",
@@ -360,17 +360,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §AIR-002",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §AIR-002",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Travel preapproval. Business flight claims require documented approval obtained before travel. Absent or unverified preapproval requires human review. Exceptions: None"
+    "text": "Travel preapproval. A business flight claim must carry documented approval obtained before travel. A flight claim without documented pre-approval does not pass. Exceptions: None"
   },
   {
     "policy_id": "FX-001",
     "title": "Foreign currency",
     "status": "CURRENT",
     "category": "special",
-    "rule": "Non-SGD claims require a documented conversion rate and its supporting bank or payment record. Convert the relevant amount into SGD before comparing caps; do not use a live or guessed exchange rate. Missing conversion evidence requires human review.",
+    "rule": "A non-SGD claim must include a documented conversion rate and the supporting bank or payment record. The documented rate is used to convert the amount into SGD before comparing it against any cap. A live or estimated rate is never used.",
     "exceptions": "None",
     "tags": [
       "currency",
@@ -384,17 +384,17 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §FX-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §FX-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Foreign currency. Non-SGD claims require a documented conversion rate and its supporting bank or payment record. Convert the relevant amount into SGD before comparing caps; do not use a live or guessed exchange rate. Missing conversion evidence requires human review. Exceptions: None"
+    "text": "Foreign currency. A non-SGD claim must include a documented conversion rate and the supporting bank or payment record. The documented rate is used to convert the amount into SGD before comparing it against any cap. A live or estimated rate is never used. Exceptions: None"
   },
   {
     "policy_id": "LOST-001",
     "title": "Lost receipt",
     "status": "CURRENT",
     "category": "special",
-    "rule": "A lost-receipt declaration and alternative payment evidence may be submitted, but every lost-receipt claim requires human review. The declaration never makes a claim automatically eligible.",
+    "rule": "A lost-receipt claim must include a signed lost-receipt declaration and alternative payment evidence, such as a bank or card statement showing the transaction. With both, the claim is assessed under the normal category rules for its expense type. Without both, the claim does not pass.",
     "exceptions": "None",
     "tags": [
       "lost receipt",
@@ -407,9 +407,9 @@
     "limit_unit": null,
     "effective_date": "2026-01-01",
     "expiry_date": null,
-    "source": "Northstar Consulting Teaching Expense Policy v1.0 §LOST-001",
+    "source": "Northstar Consulting Teaching Expense Policy v2.0 §LOST-001",
     "source_file": "policy_source.md",
     "is_demonstration": true,
-    "text": "Lost receipt. A lost-receipt declaration and alternative payment evidence may be submitted, but every lost-receipt claim requires human review. The declaration never makes a claim automatically eligible. Exceptions: None"
+    "text": "Lost receipt. A lost-receipt claim must include a signed lost-receipt declaration and alternative payment evidence, such as a bank or card statement showing the transaction. With both, the claim is assessed under the normal category rules for its expense type. Without both, the claim does not pass. Exceptions: None"
   }
 ]
