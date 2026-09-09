@@ -2,7 +2,9 @@ import extractionSchema from '@/lib/data/extraction.schema.json';
 import assessmentSchema from '@/lib/data/assessment.schema.json';
 import contextSchema from '@/lib/data/employee_context.schema.json';
 import cards from '@/lib/data/policy_cards.json';
-import { PROMPT_A,PROMPT_B,PROMPT_C } from '@/lib/prompts';
+import { PROMPT_A,PROMPT_C } from '@/lib/prompts';
+import { PROMPT_B_V3 } from '@/lib/prompt_b_v3';
+import { claimForPromptB,addDerived,CHECKS_SCHEMA,evidenceBlock,finalizeV3 } from '@/lib/member4_assess_v3';
 import { detectMime,schemaErrors,retrieve,validation,human,validateCitations,guidanceFallback } from '@/lib/engine';
 
 const json=(v:unknown,status=200)=>Response.json(v,{status,headers:{'Cache-Control':'no-store'}});
@@ -21,7 +23,7 @@ export async function POST(req:Request){
   if(b.model!=='openai/gpt-4o-mini')return json({error:'This site is configured for openai/gpt-4o-mini.'},400);
   if(!['extract','assess','guidance','baselineA','baselineB'].includes(b.action))return json({error:'Invalid action.'},400);
 
-  const traces:any[]=[];let schema:any,instruction='',input:any={},file:any=null;
+  const traces:any[]=[];let schema:any,instruction='',input:any={},file:any=null,claimB:any=null,retrievalForAssess:any=null;
   const composite={type:'object',additionalProperties:false,required:['extraction','assessment','guidance'],properties:{extraction:extractionSchema,assessment:assessmentSchema,guidance:{type:'string'}}};
   if(['extract','baselineA','baselineB'].includes(b.action)){
    if(!b.file||typeof b.file.data!=='string'||b.file.data.length>14_000_000)return json({error:'Provide a receipt no larger than 10 MB.'},400);
@@ -37,7 +39,7 @@ export async function POST(req:Request){
    const errs=[...schemaErrors(b.claim,extractionSchema),...schemaErrors(b.original,extractionSchema),...schemaErrors(b.context,contextSchema)];if(errs.length)return json({error:errs.join('; ')},400);
    const issues=validation(b.claim,b.context,b.original);if(issues.length)return json({output:human(issues),traces:[],model_used:false});
    const retrieval=retrieve(b.claim,b.context,cards);if(retrieval.flags.length)return json({output:human(retrieval.flags),traces:[],retrieval,model_used:false});
-   schema=assessmentSchema;instruction=PROMPT_B;input={CLAIM_JSON:b.claim,EMPLOYEE_CONTEXT:b.context,VALIDATION_RESULT:{blocked:false},RETRIEVAL_RESULT:retrieval};
+   claimB=addDerived(claimForPromptB(b.claim,b.context));retrievalForAssess=retrieval;schema=CHECKS_SCHEMA;instruction=PROMPT_B_V3;input={CLAIM:claimB,EVIDENCE:evidenceBlock(retrieval.policy_cards)};
   }else{
    if(schemaErrors(b.assessment,assessmentSchema).length)return json({error:'The pre-screen result is invalid.'},400);
    schema={type:'object',additionalProperties:false,required:['guidance'],properties:{guidance:{type:'string'}}};instruction=PROMPT_C;input={ASSESSMENT_JSON:b.assessment,policy_cards:cards.filter(p=>b.assessment.policy_ids.includes(p.policy_id))};
@@ -50,7 +52,7 @@ export async function POST(req:Request){
    if(!response.ok){const providerError=await response.text();return json({error:`OpenRouter returned ${response.status}: ${providerError.slice(0,300)}`,provider_status:response.status,traces},502)}
    const payload:any=await response.json();const raw=payload.choices?.[0]?.message?.content||'';
    const trace={module:b.action,attempt:attempt+1,model_id:'openai/gpt-4o-mini',model_version:payload.model||'openai/gpt-4o-mini',parameters:{temperature:0,max_tokens:8192},timestamp:new Date().toISOString(),latency_ms:Date.now()-started,usage:payload.usage||null,raw_output:raw,prompt_version:'1.0',policy_version:'1.0'};traces.push(trace);
-   try{const output=JSON.parse(raw);if(schemaErrors(output,schema).length)continue;if(b.action==='assess'&&(!validAssessmentRules(output)||!validateCitations(output,input.RETRIEVAL_RESULT.policy_ids)))continue;if(b.action==='guidance'&&(output.guidance.trim().split(/\s+/).length>100||!/Pre-screening result:/i.test(output.guidance)||/payment approved|officially approved/i.test(output.guidance)||!output.guidance.includes(b.assessment.status)))continue;return json({output,traces,model_used:true});}catch{/* one bounded retry */}
+   try{const output=JSON.parse(raw);if(schemaErrors(output,schema).length)continue;if(b.action==='assess'){const {assessment,checks}=finalizeV3(output,claimB,retrievalForAssess.policy_cards);if(!validateCitations(assessment,retrievalForAssess.policy_ids))continue;return json({output:assessment,checks,retrieval:retrievalForAssess,traces,model_used:true})}if(b.action==='guidance'&&(output.guidance.trim().split(/\s+/).length>100||!/Pre-screening result:/i.test(output.guidance)||/payment approved|officially approved/i.test(output.guidance)||!output.guidance.includes(b.assessment.status)))continue;return json({output,traces,model_used:true});}catch{/* one bounded retry */}
   }
   if(b.action==='guidance')return json({output:{guidance:guidanceFallback(b.assessment)},traces,fallback:true,model_used:true});
   return json({error:'The response did not pass format or evidence checks. Send this case for human review.',traces,output:human(['Output did not pass validation'])},422);
