@@ -5,7 +5,6 @@
     "merchant",
     "date",
     "amount",
-    "tax_amount",
     "currency",
     "receipt_id",
     "payment_method",
@@ -29,13 +28,6 @@
       "format": "date"
     },
     "amount": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "tax_amount": {
       "type": [
         "number",
         "null"
@@ -78,7 +70,6 @@
         "merchant",
         "date",
         "amount",
-        "tax_amount",
         "currency",
         "receipt_id",
         "payment_method",
@@ -96,11 +87,6 @@
           "maximum": 1
         },
         "amount": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        },
-        "tax_amount": {
           "type": "number",
           "minimum": 0,
           "maximum": 1

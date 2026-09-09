@@ -3,8 +3,8 @@ export type Data = Record<string, any>;
 export type Policy = {policy_id:string;category:string;title:string;rule:string;exceptions:string;source:string;effective_date:string;expiry_date:string|null;[key:string]:any};
 export type Assessment={status:'passed'|'not_passed'|'likely_eligible'|'likely_ineligible'|'needs_human_review';policy_ids:string[];rationale:string;missing_evidence:string[];uncertainty:string[];next_action:string};
 export const CORE=['merchant','date','amount','currency','category'];
-export const FIELDS=[...CORE,'tax_amount','receipt_id','payment_method'];
-export const LABELS:Record<string,string>={merchant:'Merchant',date:'Receipt date',amount:'Receipt total',currency:'Currency',category:'Expense category',tax_amount:'Tax amount',receipt_id:'Receipt ID',payment_method:'Payment method'};
+export const FIELDS=[...CORE,'receipt_id','payment_method'];
+export const LABELS:Record<string,string>={merchant:'Merchant',date:'Receipt date',amount:'Receipt total',currency:'Currency',category:'Expense category',receipt_id:'Receipt ID',payment_method:'Payment method'};
 export const CATEGORY:Record<string,string>={meal:'Meal',transport:'Transport',hotel:'Hotel',airfare:'Airfare',other:'Other',unclear:'Unclear'};
 export const STATUS:Record<string,string>={passed:'Passed policy pre-screen',not_passed:'Did not pass policy pre-screen',likely_eligible:'Likely eligible',likely_ineligible:'Likely ineligible',needs_human_review:'Needs human review'};
 export function validDate(v:unknown):v is string{return typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&!Number.isNaN(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v}
