@@ -2,7 +2,7 @@ import extractionSchema from '@/lib/data/extraction.schema.json';
 import assessmentSchema from '@/lib/data/assessment.schema.json';
 import contextSchema from '@/lib/data/employee_context.schema.json';
 import cards from '@/lib/data/policy_cards.json';
-import { PROMPT_A,PROMPT_C } from '@/lib/prompts';
+import { PROMPT_A,PROMPT_C,CURRENCY_DECISION_GATE } from '@/lib/prompts';
 import { PROMPT_B_V3 } from '@/lib/prompt_b_v3';
 import { claimForPromptB,addDerived,CHECKS_SCHEMA,evidenceBlock,finalizeV3 } from '@/lib/member4_assess_v3';
 import { detectMime,schemaErrors,retrieve,validation,human,validateCitations,guidanceFallback } from '@/lib/engine';
@@ -34,7 +34,7 @@ export async function POST(req:Request){
    if(mime==='application/pdf')return json({error:'Live OpenAI mode currently accepts PNG or JPG receipts. Please upload an image instead of a PDF.'},400);
    file={type:'image_url',image_url:{url:`data:${mime};base64,${b.file.data}`,detail:'high'}};
    if(b.action==='extract'){schema=extractionSchema;instruction=PROMPT_A;input={task:'Extract the attached receipt. Do not infer facts from employee context.'}}
-   else{const err=schemaErrors(b.context,contextSchema);if(err.length)return json({error:err.join('; ')},400);schema=composite;input={EMPLOYEE_CONTEXT:b.context};instruction=`Read the receipt and pre-screen this expense claim. Return one JSON object matching this schema: ${JSON.stringify(composite)}. Use English guidance.`;if(b.action==='baselineB'){instruction+=' Use the supplied teaching policies as evidence. Do not invent facts or policies; uncertain cases require human review.';input.POLICIES=cards}}
+   else{const err=schemaErrors(b.context,contextSchema);if(err.length)return json({error:err.join('; ')},400);schema=composite;input={EMPLOYEE_CONTEXT:b.context};instruction=`Read the receipt and pre-screen this expense claim. Return one JSON object matching this schema: ${JSON.stringify(composite)}. Use English guidance. ${CURRENCY_DECISION_GATE}`;if(b.action==='baselineB'){instruction+=' Use the supplied teaching policies as evidence. Do not invent facts or policies; uncertain cases require human review.';input.POLICIES=cards}}
   }else if(b.action==='assess'){
    const errs=[...schemaErrors(b.claim,extractionSchema),...schemaErrors(b.original,extractionSchema),...schemaErrors(b.context,contextSchema)];if(errs.length)return json({error:errs.join('; ')},400);
    const issues=validation(b.claim,b.context,b.original);if(issues.length)return json({output:human(issues),traces:[],model_used:false});
