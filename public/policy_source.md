@@ -60,7 +60,7 @@ Exceptions: Late-night business trips are governed by TRANSPORT-003.
 
 ## TRANSPORT-003 Late-night travel
 
-For business travel documented between 22:00 and 06:00 local time, taxi or ride-hail fares up to SGD 120 per trip pass this rule when manager approval and route and time evidence are documented. A fare above SGD 120 does not pass.
+For business travel documented between 23:00 and 06:00 local time, taxi or ride-hail fares up to SGD 120 per trip pass this rule when manager approval and route and time evidence are documented. A fare above SGD 120 does not pass.
 
 Exceptions: Replaces the SGD 80 taxi cap only when all night-travel conditions are evidenced.
 

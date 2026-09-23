@@ -106,7 +106,7 @@
       "enum": ["public", "taxi", "ride_hail", "other", null]
     },
     "night_travel": {
-      "description": "TRANSPORT-003. true = the journey falls in the documented 22:00-06:00 window. null keeps the night-travel card in scope and raises night_status_unknown.",
+      "description": "TRANSPORT-003. true = the journey falls in the documented 23:00-06:00 window. null keeps the night-travel card in scope and raises night_status_unknown.",
       "type": ["boolean", "null"]
     },
     "route_evidence_present": {
