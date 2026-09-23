@@ -13,11 +13,6 @@
     "submitted_date",
     "claimed_amount",
     "claimed_currency",
-    "preapproval_status",
-    "evidence_refs",
-    "itemized_receipt",
-    "duplicate_check",
-    "manager_approval",
     "attendee_count",
     "client_meal",
     "attendee_details_present",
@@ -29,8 +24,7 @@
     "personal_items_present",
     "flight_class",
     "fx_rate_to_sgd",
-    "fx_evidence_present",
-    "receipt_lost"
+    "fx_evidence_present"
   ],
   "properties": {
     "expense_category": {
