@@ -90,7 +90,7 @@ def validate(claim, context):
         if cat == 'transport' and context.get('transport_mode') in ('taxi', 'ride_hail') \
                 and _missing(context.get('night_travel')):
             block('missing_category_field', 'night_travel',
-                  'Whether the journey was between 23:00 and 06:00 is required for a taxi claim.')
+                  'Whether the journey was between 22:00 and 06:00 is required for a taxi claim.')
 
     # --- 2. conditional requirements ---------------------------------------
     cur = context.get('claimed_currency') or claim.get('currency')
